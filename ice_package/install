@@ -1,0 +1,2 @@
+#CC=mpicc python setup_local.py  build_ext -i
+CC=mpicc python setup.py  install --home=$HOME

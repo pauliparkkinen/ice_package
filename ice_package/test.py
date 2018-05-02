@@ -1,0 +1,2 @@
+import water_algorithm_cython
+print dir(water_algorithm_cython)

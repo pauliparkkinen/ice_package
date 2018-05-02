@@ -1,0 +1,40 @@
+module load cp2k-env/2.4
+module load ase
+module load openblas
+module load python
+module load hdf5-par/1.8.10
+PYTHONPATH=$WRKDIR/lib/python:$PYTHONPATH
+
+echo "Please enter the installation location (DEFAULT: $HOME):"
+read HOME_LOCATION
+if [ "$HOME_LOCATION" == "" ]; then
+    HOME_LOCATION=$HOME
+fi;
+echo $HOME_LOCATION
+echo "Will a parallel installation be performed (y/n)? (DEFAULT: n):"
+read PARALLEL_INSTALL
+echo "$PARALLEL_INSTALL"
+if [ "$PARALLEL_INSTALL" == "y" ]; then
+    PARALLEL_INSTALL="y"
+else
+    PARALLEL_INSTALL="n"
+fi;
+echo "$PARALLEL_INSTALL"
+rm ice_package/cython_modules/*.c
+rm ice_package/cython_modules/*.h
+rm ice_package/cython_modules/symmetries/*.c
+rm ice_package/cython_modules/symmetries/*.h
+if [ "$PARALLEL_INSTALL" == "y" ]; then
+    echo "Installing with MPI"
+    CC=mpicc python setup2.py install --home=$HOME_LOCATION PARALLEL
+    CC=mpicc python setup1.py install --home=$HOME_LOCATION PARALLEL
+else
+    echo "Installing without MPI"
+    python setup2.py install --home=$HOME_LOCATION
+    python setup1.py install --home=$HOME_LOCATION
+fi;
+
+rm ice_package/cython_modules/*.c
+rm ice_package/cython_modules/*.h
+rm ice_package/cython_modules/symmetries/*.c
+rm ice_package/cython_modules/symmetries/*.h

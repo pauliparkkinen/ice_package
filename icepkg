@@ -1,0 +1,1 @@
+python -c "import ice_package.run; ice_package.run.handle_options()" "$@"

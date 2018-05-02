@@ -1,0 +1,245 @@
+Handling molecule number 0.
+Handling molecule number 0.
+-------------------------------------------------------------------------
+Total time elapsed 0.017931 s
+  Total time elapsed in symmetry check 0.000000 s
+    Time used in bond variable conversion 0.000359 s
+    Time used trying the result groups 0.000408 s
+    Time used in symmetry loading 0.003932 s
+    Time used in symmetry checking 0.000004 s
+    Time used in handling of self symmetry groups 0.000000 s
+  Time used in the iteration of water orientations 0.000443 s
+ ------------------------------------------------------------------------
+Handling molecule number 1.
+Handling molecule number 1.
+-------------------------------------------------
+Handling self symmetry group 1 of 2 
+-------------------------------------------------
+|---------------------------------------|
+-------------------------------------------------------------------------
+Total time elapsed 0.020008 s
+  Total time elapsed in symmetry check 0.000000 s
+    Time used in bond variable conversion 0.000552 s
+    Time used trying the result groups 0.000701 s
+    Time used in symmetry loading 0.005106 s
+    Time used in symmetry checking 0.000007 s
+    Time used in handling of self symmetry groups 0.004333 s
+  Time used in the iteration of water orientations 0.000251 s
+ ------------------------------------------------------------------------
+Handling molecule number 2.
+Handling molecule number 2.
+-------------------------------------------------
+Handling self symmetry group 1 of 2 
+-------------------------------------------------
+    -------------------------------------------------
+|---------------------------------------|
+-------------------------------------------------------------------------
+Total time elapsed 0.022258 s
+  Total time elapsed in symmetry check 0.000000 s
+    Time used in bond variable conversion 0.001060 s
+    Time used trying the result groups 0.001495 s
+    Time used in symmetry loading 0.006363 s
+    Time used in symmetry checking 0.000014 s
+    Time used in handling of self symmetry groups 0.007248 s
+  Time used in the iteration of water orientations 0.000197 s
+ ------------------------------------------------------------------------
+Handling molecule number 3.
+Handling molecule number 3.
+-------------------------------------------------
+Handling self symmetry group 1 of 2 
+-------------------------------------------------
+        -------------------------------------------------
+    -------------------------------------------------
+|---------------------------------------|
+-------------------------------------------------------------------------
+Total time elapsed 0.044527 s
+  Total time elapsed in symmetry check 0.000000 s
+    Time used in bond variable conversion 0.000953 s
+    Time used trying the result groups 0.001433 s
+    Time used in symmetry loading 0.021689 s
+    Time used in symmetry checking 0.000041 s
+    Time used in handling of self symmetry groups 0.014430 s
+  Time used in the iteration of water orientations 0.000219 s
+ ------------------------------------------------------------------------
+Handling molecule number 4.
+Handling molecule number 4.
+-------------------------------------------------
+Handling self symmetry group 1 of 6 
+-------------------------------------------------
+|---------------------------------------|
+Skipping symmetry checking.
+Skipping symmetry checking.
+-------------------------------------------------------------------------
+Total time elapsed 0.020861 s
+  Total time elapsed in symmetry check 0.000000 s
+    Time used in bond variable conversion 0.000713 s
+    Time used trying the result groups 0.001191 s
+    Time used in symmetry loading 0.000046 s
+    Time used in symmetry checking 0.000001 s
+    Time used in handling of self symmetry groups 0.003526 s
+  Time used in the iteration of water orientations 0.000182 s
+ ------------------------------------------------------------------------
+Handling molecule number 5.
+Handling molecule number 5.
+-------------------------------------------------
+Handling self symmetry group 1 of 6 
+-------------------------------------------------
+    -------------------------------------------------
+|---------------------------------------|
+Skipping symmetry checking.
+Skipping symmetry checking.
+-------------------------------------------------------------------------
+Total time elapsed 0.013503 s
+  Total time elapsed in symmetry check 0.000000 s
+    Time used in bond variable conversion 0.000687 s
+    Time used trying the result groups 0.001359 s
+    Time used in symmetry loading 0.000000 s
+    Time used in symmetry checking 0.000000 s
+    Time used in handling of self symmetry groups 0.003694 s
+  Time used in the iteration of water orientations 0.000140 s
+ ------------------------------------------------------------------------
+Handling molecule number 6.
+Handling molecule number 6.
+-------------------------------------------------
+Handling self symmetry group 1 of 6 
+-------------------------------------------------
+    -------------------------------------------------
+|---------------------------------------|
+Skipping symmetry checking.
+Skipping symmetry checking.
+-------------------------------------------------------------------------
+Total time elapsed 0.016147 s
+  Total time elapsed in symmetry check 0.000000 s
+    Time used in bond variable conversion 0.000925 s
+    Time used trying the result groups 0.002042 s
+    Time used in symmetry loading 0.000037 s
+    Time used in symmetry checking 0.000002 s
+    Time used in handling of self symmetry groups 0.005108 s
+  Time used in the iteration of water orientations 0.000210 s
+ ------------------------------------------------------------------------
+Handling molecule number 7.
+Handling molecule number 7.
+-------------------------------------------------
+Handling self symmetry group 1 of 6 
+-------------------------------------------------
+        -------------------------------------------------
+    -------------------------------------------------
+|---------------------------------------|
+Skipping symmetry checking.
+Skipping symmetry checking.
+-------------------------------------------------------------------------
+Total time elapsed 0.017433 s
+  Total time elapsed in symmetry check 0.000000 s
+    Time used in bond variable conversion 0.000845 s
+    Time used trying the result groups 0.002179 s
+    Time used in symmetry loading 0.000213 s
+    Time used in symmetry checking 0.000007 s
+    Time used in handling of self symmetry groups 0.006373 s
+  Time used in the iteration of water orientations 0.000165 s
+ ------------------------------------------------------------------------
+Handling molecule number 8.
+Handling molecule number 8.
+-------------------------------------------------
+Handling self symmetry group 1 of 7 
+-------------------------------------------------
+            -------------------------------------------------
+        -------------------------------------------------
+    -------------------------------------------------
+    -------------------------------------------------
+    -------------------------------------------------
+    -------------------------------------------------
+    -------------------------------------------------
+|---------------------------------------|
+Skipping symmetry checking.
+Skipping symmetry checking.
+-------------------------------------------------------------------------
+Total time elapsed 0.019530 s
+  Total time elapsed in symmetry check 0.000000 s
+    Time used in bond variable conversion 0.001229 s
+    Time used trying the result groups 0.003938 s
+    Time used in symmetry loading 0.000048 s
+    Time used in symmetry checking 0.000000 s
+    Time used in handling of self symmetry groups 0.008831 s
+  Time used in the iteration of water orientations 0.000317 s
+ ------------------------------------------------------------------------
+Handling molecule number 9.
+Handling molecule number 9.
+-------------------------------------------------
+Handling self symmetry group 1 of 7 
+-------------------------------------------------
+                -------------------------------------------------
+            -------------------------------------------------
+        -------------------------------------------------
+    -------------------------------------------------
+    -------------------------------------------------
+    -------------------------------------------------
+    -------------------------------------------------
+    -------------------------------------------------
+|---------------------------------------|
+Skipping symmetry checking.
+Skipping symmetry checking.
+-------------------------------------------------------------------------
+Total time elapsed 0.022763 s
+  Total time elapsed in symmetry check 0.000000 s
+    Time used in bond variable conversion 0.001307 s
+    Time used trying the result groups 0.005830 s
+    Time used in symmetry loading 0.000000 s
+    Time used in symmetry checking 0.000000 s
+    Time used in handling of self symmetry groups 0.011782 s
+  Time used in the iteration of water orientations 0.000473 s
+ ------------------------------------------------------------------------
+Handling molecule number 10.
+Handling molecule number 10.
+-------------------------------------------------
+Handling self symmetry group 1 of 7 
+-------------------------------------------------
+                -------------------------------------------------
+            -------------------------------------------------
+        -------------------------------------------------
+    -------------------------------------------------
+    -------------------------------------------------
+    -------------------------------------------------
+    -------------------------------------------------
+    -------------------------------------------------
+|---------------------------------------|
+Skipping symmetry checking.
+Skipping symmetry checking.
+-------------------------------------------------------------------------
+Total time elapsed 0.027116 s
+  Total time elapsed in symmetry check 0.000000 s
+    Time used in bond variable conversion 0.001474 s
+    Time used trying the result groups 0.009425 s
+    Time used in symmetry loading 0.000040 s
+    Time used in symmetry checking 0.000001 s
+    Time used in handling of self symmetry groups 0.016908 s
+  Time used in the iteration of water orientations 0.000459 s
+ ------------------------------------------------------------------------
+Handling molecule number 11.
+Handling molecule number 11.
+-------------------------------------------------
+Handling self symmetry group 1 of 7 
+-------------------------------------------------
+                    -------------------------------------------------
+                -------------------------------------------------
+            -------------------------------------------------
+        -------------------------------------------------
+    -------------------------------------------------
+    -------------------------------------------------
+    -------------------------------------------------
+    -------------------------------------------------
+    -------------------------------------------------
+|---------------------------------------|
+Skipping symmetry checking.
+Skipping symmetry checking.
+-------------------------------------------------------------------------
+Total time elapsed 0.040082 s
+  Total time elapsed in symmetry check 0.000000 s
+    Time used in bond variable conversion 0.000390 s
+    Time used trying the result groups 0.009021 s
+    Time used in symmetry loading 0.000864 s
+    Time used in symmetry checking 0.000029 s
+    Time used in handling of self symmetry groups 0.016609 s
+  Time used in the iteration of water orientations 0.000446 s
+ ------------------------------------------------------------------------
+Execution was successful
+Total time used in execution 1.551091 s

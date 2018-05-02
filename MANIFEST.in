@@ -1,0 +1,7 @@
+recursive-include ice_package/cython_modules *
+include setup1.py setup2.py setup.py
+exclude ice_package/ice_20_dodeca.py ice_package/ice_21+_wales.py ice_package/ice_21_wales.py ice_package/ice_bilayer.py ice_package/ice_ih.py ice_package/ice_ih_limited.py ice_package/ice_nt.py ice_package/ice_wire.py
+exclude ice_package/pepa.py ice_package/pepa_up.py ice_package/handle_wales.py ice_package/test.py
+exclude ice_package/cython_modules/vanhat
+include install
+

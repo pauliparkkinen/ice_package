@@ -1,0 +1,16 @@
+running build_ext
+skipping 'cython_modules/symmetries/symmetry_operation_cython.c' Cython extension (up-to-date)
+skipping 'cython_modules/symmetries/interface_cython.c' Cython extension (up-to-date)
+skipping 'cython_modules/graph_invariants_cython.c' Cython extension (up-to-date)
+building 'graph_invariants_cython' extension
+mpicc -fno-strict-aliasing -DNDEBUG -g -fwrapv -O2 -Wall -Wstrict-prototypes -fPIC -I/home/pamparkk/.local/lib/python2.6/site-packages/mpi4py/include -I/home/pamparkk/.local/lib/python2.6/site-packages/mpi4py/include -I/usr/include/python2.6 -c cython_modules/graph_invariants_cython.c -o build/temp.linux-x86_64-2.6/cython_modules/graph_invariants_cython.o
+gcc -pthread -shared -Wl,-O1 -Wl,-Bsymbolic-functions build/temp.linux-x86_64-2.6/cython_modules/graph_invariants_cython.o -o /home/pamparkk/ice_packagee/ice_package/graph_invariants_cython.so
+skipping 'cython_modules/water_algorithm_cython.c' Cython extension (up-to-date)
+building 'water_algorithm_cython' extension
+mpicc -fno-strict-aliasing -DNDEBUG -g -fwrapv -O2 -Wall -Wstrict-prototypes -fPIC -I/home/pamparkk/.local/lib/python2.6/site-packages/mpi4py/include -I/home/pamparkk/.local/lib/python2.6/site-packages/mpi4py/include -I/usr/include/python2.6 -c cython_modules/water_algorithm_cython.c -o build/temp.linux-x86_64-2.6/cython_modules/water_algorithm_cython.o
+gcc -pthread -shared -Wl,-O1 -Wl,-Bsymbolic-functions build/temp.linux-x86_64-2.6/cython_modules/water_algorithm_cython.o -o /home/pamparkk/ice_packagee/ice_package/water_algorithm_cython.so
+skipping 'cython_modules/result_group_cython.c' Cython extension (up-to-date)
+building 'result_group_cython' extension
+mpicc -fno-strict-aliasing -DNDEBUG -g -fwrapv -O2 -Wall -Wstrict-prototypes -fPIC -I/home/pamparkk/.local/lib/python2.6/site-packages/mpi4py/include -I/home/pamparkk/.local/lib/python2.6/site-packages/mpi4py/include -I/usr/include/python2.6 -c cython_modules/result_group_cython.c -o build/temp.linux-x86_64-2.6/cython_modules/result_group_cython.o
+gcc -pthread -shared -Wl,-O1 -Wl,-Bsymbolic-functions build/temp.linux-x86_64-2.6/cython_modules/result_group_cython.o -o /home/pamparkk/ice_packagee/ice_package/result_group_cython.so
+skipping 'cython_modules/symmetries/self_symmetry_group_cython.c' Cython extension (up-to-date)

@@ -1,0 +1,170 @@
+cdef tuple handle_self_symmetry_group(self, SelfSymmetryGroup self_symmetry_group, list symmetry_operations, list new_symmetry_operations, DTYPE2_t[:, :] water_orientations, list new_self_symmetry_groups, int result_group_count, unsigned char molecule_no, ResultGroup main_result_group, bint save_self_symmetry_groups, bint all_symmetries_found, DTYPE_t[:] nn, int child_level):
+        """
+            symmetry_operations: all possible symmetry operations at current phase of execution, before removing earlier found
+            self_symmetry_group: the self symmetry group handled
+            new_symmetry_operations: the operations that are new in the current phase of execution
+            water_orientations: the water orientations from main thread
+            new_symmetry_groups: new symmetry groups found during handling of all self symmetry groups
+        """
+        cdef np.ndarray[DTYPE2_t, ndim=2] new_water_orientations, wos
+        cdef list tested_symmetry_operations, leftover_symmetry_operations
+        cdef int i, j, k, l, O, Q, P = len(self_symmetry_group.child_self_symmetry_groups), discarded = 0
+        cdef list child_self_symmetry_groups = []
+        cdef bint scatter = False
+        #cdef np.ndarray[DTYPE2_t, ndim=2] bond_variables
+        cdef ResultGroup rg, group
+        cdef SelfSymmetryGroup child_self_symmetry_group, parent_self_symmetry_group
+        tested_symmetry_operations, leftover_symmetry_operations = self_symmetry_group.get_tested_and_leftover_symmetry_operations(symmetry_operations)
+        cdef str child_empty = ""
+        cdef int child_l = 0
+        while child_l <= child_level:
+            child_empty += "    "
+            child_l += 1
+        # Do iteration of water orientations
+        #if not all_symmetries_found:
+        #    wos = comm.scatter(split_list(self_symmetry_group.water_orientations,  size),  root = 0)
+        wos = self_symmetry_group.water_orientations
+        new_water_orientations = self.handle_molecule_algorithm_2(molecule_no, wos, self.possible_combinations, nn, False, &discarded)
+        discarded = discarded # gather_and_sum(discarded)
+        #new_water_orientations = merge_water_orientations(comm.allgather(new_water_orientations))
+        #print_parallel(new_water_orientations, self.logfile)
+        print_(child_empty + "Discarded %i geometries due to breakage of ice rules, resulted %i geometries" % (discarded, new_water_orientations.shape[0]), self.logfile)
+        print_(child_empty + "Discarded %i geometries due to breakage of ice rules, resulted %i geometries" % (discarded, new_water_orientations.shape[0]), self.logfile)
+        self_symmetry_group.water_orientations = new_water_orientations
+        group = None
+        # Only using the current result group if the group is left alive, otherwise a fresh result group is used
+        if  len(leftover_symmetry_operations) == 0 and not self_symmetry_group.finalized:
+            group = self.result_group
+            scatter = False
+            self.result_group = ResultGroup(self.graph_invariants,  0)
+            print_(child_empty + "Using fresh result group, rank %i" % rank, self.logfile)
+        
+        
+        # Handle child self symmetry groups
+        for i from 0 <= i < P:
+            print_(child_empty + "-------------------------------------------------", self.logfile)
+            print_(child_empty + "Handling child self symmetry group %i of %i " % (i+1, P), self.logfile)
+            print_(child_empty + "-------------------------------------------------", self.logfile)
+            child_self_symmetry_group = self_symmetry_group.child_self_symmetry_groups[i]
+            self.handle_self_symmetry_group(child_self_symmetry_group, symmetry_operations, new_symmetry_operations, water_orientations, new_self_symmetry_groups, result_group_count, molecule_no, main_result_group, save_self_symmetry_groups, all_symmetries_found, nn, child_level + 1)
+            print_(child_empty + "-------------------------------------------------", self.logfile)
+            
+        new_water_orientations = self_symmetry_group.water_orientations
+        if new_water_orientations.shape[0] > 0:
+            if len(tested_symmetry_operations) > 0:
+                tested_symmetry_operations.extend(new_symmetry_operations)
+                tested_symmetry_operations.extend(self_symmetry_group.get_active_parent_symmetry_operations(symmetry_operations))
+                new_water_orientations = self.remove_symmetric_results(new_water_orientations, molecule_no, tested_symmetry_operations, result_group_count, child_self_symmetry_groups, save_self_symmetry_groups, [], self_symmetry_group, 1, scatter)
+                
+            self.result_group.clear_wos_from_level(1)
+            
+            
+            if len(leftover_symmetry_operations) > 0 and len(new_symmetry_operations) > 0:
+                new_water_orientations = self.remove_symmetric_results(new_water_orientations, molecule_no, new_symmetry_operations, result_group_count, child_self_symmetry_groups, save_self_symmetry_groups, [], self_symmetry_group, 1, False)
+            
+        print_(new_water_orientations, self.logfile)
+        self.result_group.clear_wos_from_level(1)
+        self_symmetry_group.child_self_symmetry_groups.extend(child_self_symmetry_groups)   
+        new_self_symmetry_groups.extend(child_self_symmetry_groups)
+        if len(leftover_symmetry_operations) == 0 and not self_symmetry_group.finalized:
+            # Switch back to original ResultGroup
+            
+            print_(child_empty + "Falling back to previous group, rank %i" % rank, self.logfile)
+            self.result_group = group
+            parent_self_symmetry_group = self_symmetry_group.get_active_parent_self_symmetry_group()
+            self_symmetry_group.finalized = True
+            print_(child_empty + "FINALISING SELF SYMMETRY GROUP: %i" % rank, self.logfile)
+            print_(new_water_orientations, self.logfile)
+            if parent_self_symmetry_group is None:
+                print_(child_empty + "Adding %i geometries to main thread, rank: %i" % (new_water_orientations.shape[0], rank), self.logfile)
+                #if all_symmetries_found:
+                #    water_orientations = np.vstack((water_orientations.base, comm.scatter(split_list(new_water_orientations,  size),  root = 0)))
+                #else:
+                water_orientations = np.vstack((water_orientations.base, new_water_orientations))
+                
+  
+            else:
+                print_(child_empty + "to parent, rank: %i" % rank, self.logfile)
+                parent_self_symmetry_group.water_orientations = np.vstack((parent_self_symmetry_group.water_orientations, new_water_orientations))
+            self_symmetry_group.water_orientations = np.empty((0, water_orientations.shape[1]), dtype=DTYPE2)
+            
+            
+            
+            print_("Grouping the new child groups", self.logfile)
+            # Group the new child groups to main ResultGroup
+            self.result_group = main_result_group
+            Q = len(child_self_symmetry_groups)
+            for j from 0 <= j < Q:
+                child_self_symmetry_group = child_self_symmetry_groups[j]
+                child_self_symmetry_group.water_orientations = self.remove_symmetric_results(child_self_symmetry_group.water_orientations, molecule_no, tested_symmetry_operations, result_group_count, [], False, [], child_self_symmetry_group, 1, False)
+                self.result_group.clear_wos_from_level(1)
+            #    #bond_variables = get_bond_variables_3(child_self_symmetry_group.water_orientations[0],  self.nearest_neighbors_nos)
+            #    #rg = main_result_group.try_subgroups(bond_variables, 5)
+            #    #rg.add_result(child_self_symmetry_group.water_orientations[0], None)
+            self.result_group = group
+                
+        else:
+            print_(child_empty + "GROUP LEFT ALIVE", self.logfile)
+            self_symmetry_group.symmetry_operations = leftover_symmetry_operations 
+            self_symmetry_group.water_orientations = new_water_orientations
+            new_self_symmetry_groups.append(self_symmetry_group)
+        return new_self_symmetry_groups, water_orientations
+            
+        
+                
+    
+    cdef tuple handle_self_symmetry_groups(self, DTYPE2_t[:, :] water_orientations, unsigned char molecule_no, list self_symmetry_groups, list symmetry_operations, int result_group_count, bint save_self_symmetry_groups, bint all_symmetries_found):
+        s = time()
+        cdef int i, j, k, l, m, discarded, N, M, L, O, P, total = 0, tested
+        cdef SymmetryOperation symmetry_operation
+        cdef SelfSymmetryGroup self_symmetry_group, child_self_symmetry_group, parent_self_symmetry_group
+        cdef ResultGroup group
+        
+        cdef DTYPE_t are_symmetric, is_self_symmetric
+        cdef bool add
+        cdef list new_self_symmetry_groups = []
+        cdef DTYPE2_t[:, :] new_water_orientations = np.empty((0, self.N), dtype=DTYPE2)
+        
+        cdef list nchsg, all_child_self_symmetry_groups, all_new_children, new_cssgs
+        cdef list new_symmetry_operations
+        cdef list tested_symmetry_operations, leftover_symmetry_operations, active_symmetry_operations
+        cdef DTYPE_t[:] nn = self.nearest_neighbors_nos[0, molecule_no]
+        if molecule_no == self.order[self.order.shape[0]-1]:
+            save_self_symmetry_groups = False
+        cdef np.ndarray[DTYPE_t, ndim=3] nearest_neighbors_nos = self.nearest_neighbors_nos 
+        if rank == 0:
+            new_symmetry_operations = remove_earlier_found(symmetry_operations)
+        else:
+            new_symmetry_operations = None
+        
+        new_symmetry_operations = comm.bcast(new_symmetry_operations, root = 0)
+        if not all_symmetries_found:
+            self_symmetry_groups = comm.scatter(split_list(self_symmetry_groups, size), root = 0)
+        N = len(self_symmetry_groups)
+        print "Processor %i handles %i root - groups" % (rank, N)
+        for i from 0 <= i < N:
+            discarded = 0
+            
+            print_("-------------------------------------------------", self.logfile)
+            print_("Handling self symmetry group %i of %i " % (i+1, N), self.logfile)
+            print_("-------------------------------------------------", self.logfile)
+            
+            self_symmetry_group = self_symmetry_groups[i]
+            new_self_symmetry_groups, new_water_orientations = self.handle_self_symmetry_group(self_symmetry_group, symmetry_operations, new_symmetry_operations, new_water_orientations,  new_self_symmetry_groups, result_group_count, molecule_no, self.result_group, save_self_symmetry_groups, all_symmetries_found, nn, 0)
+           
+        self.result_group.clear_wos_from_level(1)# = ResultGroup(list(self.graph_invariants),  0)
+        print "Total %i water orientations in self symmetry_groups" % (total + len(new_self_symmetry_groups))
+        cdef list result = []
+        cdef int o, E = len(new_self_symmetry_groups)
+        for o from 0 <= o < E:
+            self_symmetry_group = new_self_symmetry_groups[o]
+            parent_self_symmetry_group = self_symmetry_group.get_active_parent_self_symmetry_group()
+            if parent_self_symmetry_group is None and not self_symmetry_group.finalized:
+                print_("Self symmetry group has %i water orientations" % len(self_symmetry_group.water_orientations), self.logfile)
+                result.append(self_symmetry_group)
+        if not all_symmetries_found:
+            result = merge(comm.allgather(result))
+            new_water_orientations = merge_water_orientations(comm.allgather(new_water_orientations.base))
+        water_orientations = np.vstack((water_orientations.base, new_water_orientations.base))
+        self.self_symmetry_time = time() - s
+        return result, water_orientations.base
